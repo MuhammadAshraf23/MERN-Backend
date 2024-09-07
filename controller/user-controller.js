@@ -45,16 +45,17 @@ export const userLogin = async (req, res) => {
   try {
     console.log("req", req.body);
     const user = await User.findOne({ email });
+    console.log("user",user)
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password." });
     }
     // Compare the provided password with the hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid email or password." });
+      return res.status(400).json({ message: "Invalid email or passwordss." });
     }
     // Authentication successful
-    res.status(200).json({ message: "User logged in successfully." });
+    res.status(200).json({ message: "User logged in successfully.",data:user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error." });
